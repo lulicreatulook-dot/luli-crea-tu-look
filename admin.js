@@ -82,6 +82,72 @@ async function cargarConfig() {
   }
 }
 
+// ── Variantes con stock ───────────────────────────────────
+function normalizarVariantes(variantes) {
+  if (!variantes?.length) return []
+  return variantes.map(v => typeof v === 'string' ? { nombre: v, stock: 0 } : v)
+}
+
+function renderVariantesAdmin(variantes) {
+  const lista = document.getElementById('variantesLista')
+  lista.innerHTML = variantes.map(v => `
+    <div class="variante-admin-row">
+      <input class="variante-nombre-input" type="text" value="${v.nombre}" placeholder="Ej: Rosa">
+      <span class="variante-stock-label">Stock:</span>
+      <input class="variante-stock-input" type="number" value="${v.stock ?? 0}" min="0">
+      <button type="button" class="btn-quitar-variante" onclick="eliminarVariante(this)">×</button>
+    </div>
+  `).join('')
+  actualizarVisibilidadStock()
+}
+
+function agregarVariante() {
+  const lista = document.getElementById('variantesLista')
+  const div = document.createElement('div')
+  div.className = 'variante-admin-row'
+  div.innerHTML = `
+    <input class="variante-nombre-input" type="text" placeholder="Ej: Rosa">
+    <span class="variante-stock-label">Stock:</span>
+    <input class="variante-stock-input" type="number" value="0" min="0">
+    <button type="button" class="btn-quitar-variante" onclick="eliminarVariante(this)">×</button>
+  `
+  lista.appendChild(div)
+  div.querySelector('.variante-nombre-input').focus()
+  actualizarVisibilidadStock()
+}
+
+function eliminarVariante(btn) {
+  btn.closest('.variante-admin-row').remove()
+  actualizarVisibilidadStock()
+}
+
+function actualizarVisibilidadStock() {
+  const tieneVariantes = document.getElementById('variantesLista').children.length > 0
+  document.getElementById('fgStockGeneral').style.display = tieneVariantes ? 'none' : ''
+}
+
+function leerVariantesAdmin() {
+  return Array.from(document.querySelectorAll('.variante-admin-row')).map(row => ({
+    nombre: row.querySelector('.variante-nombre-input').value.trim(),
+    stock: parseInt(row.querySelector('.variante-stock-input').value) || 0
+  })).filter(v => v.nombre)
+}
+
+function stockResumen(p) {
+  const variantes = normalizarVariantes(p.variantes)
+  if (variantes.length > 0) {
+    return variantes.map(v => {
+      const cls = v.stock > 5 ? 'ok' : v.stock > 0 ? 'bajo' : 'cero'
+      return `<span class="stock-chip ${cls}">${v.nombre} ×${v.stock}</span>`
+    }).join('')
+  }
+  if (typeof p.stock === 'number') {
+    const cls = p.stock > 5 ? 'ok' : p.stock > 0 ? 'bajo' : 'cero'
+    return `<span class="stock-chip ${cls}">Stock: ${p.stock}</span>`
+  }
+  return ''
+}
+
 // ── Render lista productos ────────────────────────────────
 function fmtPrecio(n) {
   return '$' + Number(n).toLocaleString('es-CO')
@@ -117,6 +183,7 @@ function renderListaProductos() {
         <div class="producto-admin-info">
           <div class="producto-admin-nombre">${p.nombre}</div>
           <div class="producto-admin-meta">${fmtPrecio(p.precio)} · ${p.categoria}</div>
+          <div class="stock-chips-row">${stockResumen(p)}</div>
           <div class="producto-admin-acciones">
             <span class="badge-disponible ${disponible ? 'si' : 'no'}">${disponible ? 'Disponible' : 'Sin stock'}</span>
             <button class="btn-secondary" style="font-size:0.8rem;padding:6px 12px"
@@ -170,7 +237,9 @@ function abrirModalNuevo() {
   document.getElementById('prodDescripcionEn').value = ''
   document.getElementById('prodPrecio').value = ''
   document.getElementById('prodCategoria').value = 'ganchitos'
-  document.getElementById('prodVariantes').value = ''
+  document.getElementById('variantesLista').innerHTML = ''
+  document.getElementById('prodStock').value = '0'
+  actualizarVisibilidadStock()
   document.getElementById('prodDisponible').checked = true
   document.getElementById('prodFoto').value = ''
   document.getElementById('fotoPreviewWrap').innerHTML = FOTO_PLACEHOLDER_SVG
@@ -189,7 +258,8 @@ function abrirModalEditar(id) {
   document.getElementById('prodDescripcionEn').value = p.descripcion_en || ''
   document.getElementById('prodPrecio').value = p.precio || ''
   document.getElementById('prodCategoria').value = p.categoria || 'ganchitos'
-  document.getElementById('prodVariantes').value = (p.variantes || []).join(', ')
+  renderVariantesAdmin(normalizarVariantes(p.variantes))
+  document.getElementById('prodStock').value = p.stock ?? 0
   document.getElementById('prodDisponible').checked = p.disponible !== false
   document.getElementById('prodFoto').value = p.foto || ''
 
@@ -233,10 +303,10 @@ async function guardarProducto() {
   }
   errorEl.style.display = 'none'
 
-  const variantesRaw = document.getElementById('prodVariantes').value
-  const variantes = variantesRaw
-    ? variantesRaw.split(',').map(v => v.trim()).filter(Boolean)
-    : []
+  const variantes = leerVariantesAdmin()
+  const stock = variantes.length === 0
+    ? (parseInt(document.getElementById('prodStock').value) || 0)
+    : undefined
 
   const producto = {
     id: productoEditando?.id || ('prod_' + Date.now()),
@@ -246,6 +316,7 @@ async function guardarProducto() {
     precio,
     categoria: document.getElementById('prodCategoria').value,
     variantes,
+    stock,
     disponible: document.getElementById('prodDisponible').checked,
     foto: document.getElementById('prodFoto').value || null
   }
@@ -447,6 +518,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Nuevo producto
   document.getElementById('btnNuevoProducto').addEventListener('click', abrirModalNuevo)
+  document.getElementById('btnAgregarVariante').addEventListener('click', agregarVariante)
 
   // Modal: guardar y cancelar
   document.getElementById('btnGuardarProducto').addEventListener('click', guardarProducto)

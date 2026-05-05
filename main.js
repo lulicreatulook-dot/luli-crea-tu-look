@@ -4,6 +4,19 @@ let categoriaActual = ''
 let productoEnModal = null
 let varianteSeleccionada = ''
 
+function normalizarVariantes(variantes) {
+  if (!variantes?.length) return []
+  return variantes.map(v => typeof v === 'string' ? { nombre: v, stock: 0 } : v)
+}
+
+function estaDisponible(p) {
+  if (p.disponible === false) return false
+  const variantes = normalizarVariantes(p.variantes)
+  if (variantes.length > 0) return variantes.some(v => v.stock > 0)
+  if (typeof p.stock === 'number') return p.stock > 0
+  return true
+}
+
 const ICONO_PRODUCTO = `
   <svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#C9A227" stroke-width="1.5" opacity="0.35">
     <rect x="3" y="3" width="18" height="18" rx="2"/>
@@ -63,12 +76,12 @@ function renderProductos() {
       ? `<img class="producto-foto" src="${p.foto}" alt="${p.nombre}" loading="lazy">`
       : `<div class="producto-foto-placeholder">${ICONO_PRODUCTO}</div>`
 
-    const accionHtml = p.disponible === false
+    const accionHtml = !estaDisponible(p)
       ? `<span class="badge-no-disponible">${t('producto.sin.stock')}</span>`
       : `<button class="btn-agregar" onclick="abrirModal('${p.id}')">${t('producto.agregar')}</button>`
 
     return `
-      <article class="producto-card ${p.disponible === false ? 'no-disponible' : ''}"
+      <article class="producto-card ${!estaDisponible(p) ? 'no-disponible' : ''}"
                onclick="abrirModal('${p.id}')"
                aria-label="${p.nombre}, ${formatPrecio(p.precio)}">
         ${fotoHtml}
@@ -84,7 +97,9 @@ function renderProductos() {
 function abrirModal(id) {
   productoEnModal = todosLosProductos.find(p => p.id === id)
   if (!productoEnModal) return
-  varianteSeleccionada = productoEnModal.variantes?.[0] || ''
+
+  const variantes = normalizarVariantes(productoEnModal.variantes)
+  varianteSeleccionada = variantes.find(v => v.stock > 0)?.nombre || variantes[0]?.nombre || ''
 
   const modal = document.getElementById('modalProducto')
   const overlay = document.getElementById('modalOverlay')
@@ -94,17 +109,19 @@ function abrirModal(id) {
     ? `<img class="modal-foto" src="${productoEnModal.foto}" alt="${productoEnModal.nombre}">`
     : `<div class="modal-foto-placeholder">${ICONO_PRODUCTO.replace('48', '72')}</div>`
 
-  const variantesHtml = productoEnModal.variantes?.length
+  const variantesHtml = variantes.length
     ? `<p class="modal-variantes-label">${t('producto.variante')}</p>
        <div class="variantes-grid" id="variantesGrid">
-         ${productoEnModal.variantes.map(v =>
-           `<button class="variante-btn ${v === varianteSeleccionada ? 'seleccionada' : ''}"
-                    onclick="seleccionarVariante('${v}')">${tColor(v)}</button>`
+         ${variantes.map(v =>
+           `<button class="variante-btn ${v.nombre === varianteSeleccionada ? 'seleccionada' : ''} ${v.stock === 0 ? 'sin-stock' : ''}"
+                    data-variante="${v.nombre}"
+                    onclick="seleccionarVariante('${v.nombre}')"
+                    ${v.stock === 0 ? 'disabled' : ''}>${tColor(v.nombre)}</button>`
          ).join('')}
        </div>`
     : ''
 
-  const btnHtml = productoEnModal.disponible === false
+  const btnHtml = !estaDisponible(productoEnModal)
     ? `<button class="modal-agregar" disabled>${t('producto.sin.stock')}</button>`
     : `<button class="modal-agregar" id="btnModalAgregar">${t('producto.agregar')}</button>`
 
@@ -138,7 +155,7 @@ function abrirModal(id) {
 function seleccionarVariante(v) {
   varianteSeleccionada = v
   document.querySelectorAll('.variante-btn').forEach(btn => {
-    btn.classList.toggle('seleccionada', btn.textContent === v)
+    btn.classList.toggle('seleccionada', btn.dataset.variante === v)
   })
 }
 

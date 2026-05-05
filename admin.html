@@ -170,10 +170,17 @@
       </select>
     </div>
 
+    <div class="form-group" id="fgStockGeneral">
+      <label class="form-label">Stock</label>
+      <input class="input" type="number" id="prodStock" placeholder="0" min="0" style="max-width:120px">
+      <p class="variantes-admin-input" style="margin-top:4px">Unidades disponibles. Si el producto tiene variantes de color, el stock se gestiona por variante abajo.</p>
+    </div>
+
     <div class="form-group">
-      <label class="form-label" for="prodVariantes">Colores / Variantes</label>
-      <input class="input" type="text" id="prodVariantes" placeholder="Rosa, Azul, Blanco (separados por coma)">
-      <p class="variantes-admin-input">Separados por coma. Dejar vacío si no aplica.</p>
+      <label class="form-label">Colores / Variantes</label>
+      <div id="variantesLista" class="variantes-lista-admin"></div>
+      <button type="button" id="btnAgregarVariante" class="btn-secondary" style="margin-top:8px;font-size:0.8rem;padding:7px 14px">+ Agregar variante</button>
+      <p class="variantes-admin-input" style="margin-top:6px">Cada variante tiene su propio stock. Si no hay variantes, usá el campo Stock de arriba.</p>
     </div>
 
     <div class="form-group">

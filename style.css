@@ -456,6 +456,7 @@ body {
 
 .variante-btn:hover { border-color: var(--oro); color: var(--oro); }
 .variante-btn.seleccionada { background: var(--oro); border-color: var(--oro); color: white; }
+.variante-btn.sin-stock { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
 
 .modal-agregar {
   width: 100%;
