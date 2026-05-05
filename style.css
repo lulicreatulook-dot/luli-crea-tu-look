@@ -725,6 +725,72 @@ body {
   font-size: 0.95rem;
 }
 
+/* ── Nosotras ──────────────────────────────────── */
+.nosotras {
+  background: white;
+  border-top: 1px solid var(--borde);
+  padding: 72px 20px 80px;
+}
+
+.nosotras-inner {
+  max-width: 680px;
+  margin: 0 auto;
+}
+
+.nosotras-titulo {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  color: var(--oro);
+  text-align: center;
+  margin-bottom: 52px;
+  line-height: 1.2;
+}
+
+.nosotras-bloque {
+  margin-bottom: 0;
+}
+
+.nosotras-subtitulo {
+  font-family: var(--font-heading);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--oro);
+  margin-bottom: 20px;
+}
+
+.nosotras-bloque p {
+  font-family: var(--font-heading);
+  font-size: 1.08rem;
+  line-height: 1.9;
+  color: var(--texto-suave);
+  margin-bottom: 18px;
+}
+
+.nosotras-bloque p:last-child {
+  margin-bottom: 0;
+}
+
+.nosotras-cierre {
+  font-style: italic;
+  color: var(--texto) !important;
+  font-weight: 500;
+}
+
+.nosotras-divider {
+  width: 36px;
+  height: 2px;
+  background: var(--oro-claro);
+  margin: 52px 0;
+}
+
+@media (max-width: 480px) {
+  .nosotras { padding: 48px 16px 56px; }
+  .nosotras-titulo { margin-bottom: 36px; }
+  .nosotras-divider { margin: 36px 0; }
+}
+
 /* ── Footer ──────────────────────────────────── */
 .footer {
   background: var(--texto);
