@@ -1,0 +1,431 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Nunito:wght@400;500;600;700&display=swap');
+
+:root {
+  --fondo: #FDF8F0;
+  --superficie: #FFFFFF;
+  --oro: #C9A227;
+  --oro-hover: #B8911F;
+  --oro-claro: #F0E8D0;
+  --texto: #2C1A0E;
+  --texto-suave: #7A6652;
+  --borde: #E8DDD0;
+  --error: #C0392B;
+  --exito: #27AE60;
+  --radio: 10px;
+  --font-display: 'Great Vibes', cursive;
+  --font-heading: 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Nunito', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--fondo);
+  color: var(--texto);
+  font-family: var(--font-body);
+  font-size: 15px;
+  min-height: 100vh;
+}
+
+/* ── Login ──────────────────────────────────── */
+.login-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.login-card {
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: 0 4px 24px rgba(44, 26, 14, 0.1);
+  padding: 40px 32px;
+  width: min(380px, 100%);
+  text-align: center;
+}
+
+.login-logo {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: var(--oro);
+  margin-bottom: 4px;
+}
+
+.login-card h2 {
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--texto-suave);
+  margin-bottom: 28px;
+}
+
+.login-card form { display: flex; flex-direction: column; gap: 12px; }
+
+.input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1.5px solid var(--borde);
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  background: var(--fondo);
+  transition: border-color 0.2s;
+  outline: none;
+}
+
+.input:focus { border-color: var(--oro); }
+
+.btn-primary {
+  background: var(--oro);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover { background: var(--oro-hover); }
+.btn-primary:disabled { opacity: 0.6; cursor: default; }
+
+.btn-secondary {
+  background: white;
+  color: var(--oro);
+  border: 1.5px solid var(--oro);
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover { background: var(--oro); color: white; }
+
+.btn-danger {
+  background: none;
+  color: var(--error);
+  border: 1.5px solid var(--error);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-danger:hover { background: var(--error); color: white; }
+
+.msg-error { color: var(--error); font-size: 0.85rem; margin-top: 4px; }
+.msg-exito { color: var(--exito); font-size: 0.85rem; margin-top: 4px; }
+
+/* ── Admin Panel ──────────────────────────────────── */
+.admin-panel { min-height: 100vh; }
+
+.admin-header {
+  background: var(--texto);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.admin-header-logo {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--oro);
+}
+
+.btn-logout {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.3);
+  color: rgba(255,255,255,0.7);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-logout:hover { border-color: white; color: white; }
+
+/* ── Tabs ──────────────────────────────────── */
+.admin-tabs {
+  display: flex;
+  border-bottom: 2px solid var(--borde);
+  background: white;
+  padding: 0 16px;
+  overflow-x: auto;
+}
+
+.tab-btn {
+  background: none;
+  border: none;
+  padding: 14px 20px;
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 0.875rem;
+  color: var(--texto-suave);
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+}
+
+.tab-btn:hover { color: var(--texto); }
+.tab-btn.activo { color: var(--oro); border-bottom-color: var(--oro); }
+
+/* ── Tab Content ──────────────────────────────────── */
+.tab-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 24px 16px;
+}
+
+.admin-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.admin-toolbar h3 {
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+}
+
+/* ── Productos lista ──────────────────────────────────── */
+.producto-admin-card {
+  background: white;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 16px;
+  margin-bottom: 12px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.producto-admin-foto {
+  width: 72px;
+  height: 72px;
+  border-radius: 6px;
+  object-fit: cover;
+  background: var(--oro-claro);
+  flex-shrink: 0;
+}
+
+.producto-admin-info { flex: 1; min-width: 0; }
+
+.producto-admin-nombre {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.producto-admin-meta {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+  margin-bottom: 10px;
+}
+
+.producto-admin-acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.badge-disponible {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: 50px;
+}
+
+.badge-disponible.si { background: #e8f8ef; color: var(--exito); }
+.badge-disponible.no { background: #fde; color: var(--error); }
+
+/* ── Toggle Ciclovía ──────────────────────────────────── */
+.admin-section {
+  background: white;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 24px;
+}
+
+.admin-section h3 {
+  font-family: var(--font-heading);
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.admin-section p {
+  color: var(--texto-suave);
+  font-size: 0.875rem;
+  margin-bottom: 20px;
+  line-height: 1.6;
+}
+
+.toggle-wrap {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.toggle-input { display: none; }
+
+.toggle-track {
+  width: 48px;
+  height: 26px;
+  background: var(--borde);
+  border-radius: 50px;
+  position: relative;
+  cursor: pointer;
+  transition: background 0.25s;
+}
+
+.toggle-track::after {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  transition: transform 0.25s;
+}
+
+.toggle-input:checked + .toggle-track { background: var(--exito); }
+.toggle-input:checked + .toggle-track::after { transform: translateX(22px); }
+
+.toggle-label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+/* ── Config form ──────────────────────────────────── */
+.form-group { margin-bottom: 16px; }
+
+.form-label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--texto-suave);
+  margin-bottom: 6px;
+}
+
+.nequi-qr-preview {
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 8px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nequi-qr-preview img { max-width: 100px; border-radius: 4px; }
+
+.nequi-qr-placeholder {
+  color: var(--texto-suave);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+/* ── Modal admin (producto form) ──────────────────────────────────── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(44, 26, 14, 0.5);
+  z-index: 200;
+}
+
+.modal-admin {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: var(--radio);
+  box-shadow: 0 20px 60px rgba(44, 26, 14, 0.2);
+  z-index: 201;
+  width: min(500px, 94vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: 28px 24px;
+}
+
+.modal-admin h3 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.modal-admin .form-group:last-of-type { margin-bottom: 24px; }
+
+.modal-acciones {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.foto-preview-wrap {
+  width: 100%;
+  aspect-ratio: 1;
+  max-width: 200px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: var(--oro-claro);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foto-preview-wrap img { width: 100%; height: 100%; object-fit: cover; }
+
+.variantes-admin-input {
+  font-size: 0.8rem;
+  color: var(--texto-suave);
+}
+
+/* ── Loading ──────────────────────────────────── */
+.loading-panel {
+  display: flex;
+  justify-content: center;
+  padding: 48px;
+}
+
+.spinner {
+  width: 36px;
+  height: 36px;
+  border: 3px solid var(--borde);
+  border-top-color: var(--oro);
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
