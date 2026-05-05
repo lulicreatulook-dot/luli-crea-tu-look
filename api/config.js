@@ -1,4 +1,5 @@
-const { kv } = require('@vercel/kv')
+const { Redis } = require('@upstash/redis')
+const kv = new Redis({ url: process.env.kv_KV_REST_API_URL, token: process.env.kv_KV_REST_API_TOKEN })
 
 const SEED_CONFIG = {
   whatsapp: '+573023264558',
