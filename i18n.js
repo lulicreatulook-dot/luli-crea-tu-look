@@ -51,7 +51,35 @@ const TRANSLATIONS = {
   }
 }
 
+const COLOR_MAP = {
+  'Rosa': 'Pink',
+  'Lila': 'Lilac',
+  'Blanco': 'White',
+  'Negro': 'Black',
+  'Rojo': 'Red',
+  'Azul': 'Blue',
+  'Beige': 'Beige',
+  'Café': 'Brown',
+  'Vino': 'Wine',
+  'Verde Oliva': 'Olive Green',
+  'Multicolor': 'Multicolor',
+  'Nude': 'Nude',
+  'Azul Cielo': 'Sky Blue',
+  'Dorado': 'Gold',
+  'Plateado': 'Silver',
+  'Naranja': 'Orange',
+  'Amarillo': 'Yellow',
+  'Verde': 'Green',
+  'Morado': 'Purple',
+  'Gris': 'Gray',
+}
+
 let currentLang = localStorage.getItem('luli_lang') || 'es'
+
+function tColor(name) {
+  if (currentLang === 'es') return name
+  return COLOR_MAP[name] || name
+}
 
 function t(key) {
   return (TRANSLATIONS[currentLang] || TRANSLATIONS.es)[key] || TRANSLATIONS.es[key] || key

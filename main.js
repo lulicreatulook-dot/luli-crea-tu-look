@@ -99,7 +99,7 @@ function abrirModal(id) {
        <div class="variantes-grid" id="variantesGrid">
          ${productoEnModal.variantes.map(v =>
            `<button class="variante-btn ${v === varianteSeleccionada ? 'seleccionada' : ''}"
-                    onclick="seleccionarVariante('${v}')">${v}</button>`
+                    onclick="seleccionarVariante('${v}')">${tColor(v)}</button>`
          ).join('')}
        </div>`
     : ''
@@ -114,7 +114,12 @@ function abrirModal(id) {
     <div class="modal-body">
       <h2 class="modal-nombre">${productoEnModal.nombre}</h2>
       <p class="modal-precio">${formatPrecio(productoEnModal.precio)}</p>
-      ${productoEnModal.descripcion ? `<p class="modal-descripcion">${productoEnModal.descripcion}</p>` : ''}
+      ${(() => {
+        const desc = (currentLang === 'en' && productoEnModal.descripcion_en)
+          ? productoEnModal.descripcion_en
+          : productoEnModal.descripcion
+        return desc ? `<p class="modal-descripcion">${desc}</p>` : ''
+      })()}
       ${variantesHtml}
       ${btnHtml}
     </div>`

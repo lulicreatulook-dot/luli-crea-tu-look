@@ -167,6 +167,7 @@ function abrirModalNuevo() {
   document.getElementById('modalTitulo').textContent = 'Nuevo producto'
   document.getElementById('prodNombre').value = ''
   document.getElementById('prodDescripcion').value = ''
+  document.getElementById('prodDescripcionEn').value = ''
   document.getElementById('prodPrecio').value = ''
   document.getElementById('prodCategoria').value = 'ganchitos'
   document.getElementById('prodVariantes').value = ''
@@ -185,6 +186,7 @@ function abrirModalEditar(id) {
   document.getElementById('modalTitulo').textContent = 'Editar producto'
   document.getElementById('prodNombre').value = p.nombre || ''
   document.getElementById('prodDescripcion').value = p.descripcion || ''
+  document.getElementById('prodDescripcionEn').value = p.descripcion_en || ''
   document.getElementById('prodPrecio').value = p.precio || ''
   document.getElementById('prodCategoria').value = p.categoria || 'ganchitos'
   document.getElementById('prodVariantes').value = (p.variantes || []).join(', ')
@@ -240,6 +242,7 @@ async function guardarProducto() {
     id: productoEditando?.id || ('prod_' + Date.now()),
     nombre,
     descripcion: document.getElementById('prodDescripcion').value.trim(),
+    descripcion_en: document.getElementById('prodDescripcionEn').value.trim() || undefined,
     precio,
     categoria: document.getElementById('prodCategoria').value,
     variantes,
