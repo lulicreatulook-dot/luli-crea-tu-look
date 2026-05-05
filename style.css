@@ -71,6 +71,30 @@ body {
   text-transform: uppercase;
 }
 
+.header-acciones {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-lang {
+  background: none;
+  border: 1px solid var(--oro);
+  color: var(--oro);
+  border-radius: 4px;
+  padding: 4px 10px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.btn-lang:hover {
+  background: var(--oro);
+  color: white;
+}
+
 .btn-carrito {
   position: relative;
   background: none;

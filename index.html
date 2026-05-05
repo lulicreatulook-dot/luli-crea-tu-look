@@ -16,15 +16,18 @@
         <span class="logo-luli">Luli</span>
         <span class="logo-subtitulo">Crea Tu Look</span>
       </a>
-      <button class="btn-carrito" id="btnCarrito" aria-label="Ver carrito">
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
-          <line x1="3" y1="6" x2="21" y2="6"/>
-          <path d="M16 10a4 4 0 01-8 0"/>
-        </svg>
-        <span>Carrito</span>
-        <span class="carrito-count" id="carritoCount">0</span>
-      </button>
+      <div class="header-acciones">
+        <button class="btn-lang" id="btnLang" onclick="setLang(currentLang === 'es' ? 'en' : 'es')" aria-label="Switch language">EN</button>
+        <button class="btn-carrito" id="btnCarrito" aria-label="Ver carrito">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span data-i18n="carrito">Carrito</span>
+          <span class="carrito-count" id="carritoCount">0</span>
+        </button>
+      </div>
     </div>
   </header>
 
@@ -32,19 +35,19 @@
   <section class="hero">
     <p class="hero-pretitulo">Medellín · Colombia</p>
     <h1 class="hero-titulo">Luli Crea Tu Look</h1>
-    <p class="hero-subtitulo">Para mujeres que cuidan cómo se ven — sin complicaciones.</p>
+    <p class="hero-subtitulo" data-i18n="hero.subtitulo">Para mujeres que cuidan cómo se ven — sin complicaciones.</p>
   </section>
 
   <!-- Filtros -->
   <section class="filtros" aria-label="Filtrar por categoría">
     <div class="filtros-inner">
-      <button class="filtro-btn activo" data-cat="">Todos</button>
-      <button class="filtro-btn" data-cat="ganchitos">Ganchitos</button>
-      <button class="filtro-btn" data-cat="vinchas">Vinchas</button>
-      <button class="filtro-btn" data-cat="cintas">Cintas</button>
-      <button class="filtro-btn" data-cat="hebillas">Hebillas</button>
-      <button class="filtro-btn" data-cat="sets">Sets</button>
-      <button class="filtro-btn" data-cat="accesorios-especiales">Especiales</button>
+      <button class="filtro-btn activo" data-cat="" data-i18n="filtro.todos">Todos</button>
+      <button class="filtro-btn" data-cat="ganchitos" data-i18n="filtro.ganchitos">Ganchitos</button>
+      <button class="filtro-btn" data-cat="vinchas" data-i18n="filtro.vinchas">Vinchas</button>
+      <button class="filtro-btn" data-cat="cintas" data-i18n="filtro.cintas">Cintas</button>
+      <button class="filtro-btn" data-cat="hebillas" data-i18n="filtro.hebillas">Hebillas</button>
+      <button class="filtro-btn" data-cat="sets" data-i18n="filtro.sets">Sets</button>
+      <button class="filtro-btn" data-cat="accesorios-especiales" data-i18n="filtro.especiales">Especiales</button>
     </div>
   </section>
 
@@ -54,7 +57,7 @@
       <div class="loading-spinner"></div>
     </div>
     <div class="productos-grid" id="productosGrid" style="display:none"></div>
-    <p class="no-productos" id="noProductos" style="display:none">
+    <p class="no-productos" id="noProductos" style="display:none" data-i18n="no.productos">
       No hay productos en esta categoría por ahora.
     </p>
   </main>
@@ -62,8 +65,8 @@
   <!-- Ciclovía (condicional) -->
   <section class="ciclovia" id="seccionCiclovia" style="display:none" aria-hidden="true">
     <div class="ciclovia-inner">
-      <h2>¡Nos vemos en la Ciclovía!</h2>
-      <p>Cada domingo en el Parque de El Poblado, Medellín.<br>
+      <h2 data-i18n="ciclovia.titulo">¡Nos vemos en la Ciclovía!</h2>
+      <p data-i18n-html="ciclovia.desc">Cada domingo en el Parque de El Poblado, Medellín.<br>
          Ven a conocer nuestros productos en persona, probarlos y llevártelos al instante.</p>
     </div>
   </section>
@@ -71,7 +74,7 @@
   <!-- Footer -->
   <footer class="footer">
     <span class="footer-logo">Luli</span>
-    <p>Pagos por Nequi · Envíos por Servientrega</p>
+    <p data-i18n="footer.pagos">Pagos por Nequi · Envíos por Servientrega</p>
     <p>Medellín, Colombia</p>
   </footer>
 
@@ -79,7 +82,7 @@
   <div class="carrito-overlay" id="carritoOverlay" role="presentation"></div>
   <aside class="carrito-sidebar" id="carritoSidebar" aria-label="Carrito de compras">
     <div class="carrito-header">
-      <h2 class="carrito-titulo">Mi pedido</h2>
+      <h2 class="carrito-titulo" data-i18n="carrito.titulo">Mi pedido</h2>
       <button class="btn-cerrar-carrito" id="btnCerrarCarrito" aria-label="Cerrar carrito">✕</button>
     </div>
     <div class="carrito-items" id="carritoItems"></div>
@@ -101,6 +104,7 @@
     </svg>
   </a>
 
+  <script src="/i18n.js"></script>
   <script src="/carrito.js"></script>
   <script src="/main.js"></script>
 </body>

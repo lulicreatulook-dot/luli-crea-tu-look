@@ -37,7 +37,7 @@ async function cargarDatos() {
     console.error('Error cargando datos:', err)
     document.getElementById('loading').style.display = 'none'
     document.getElementById('noProductos').style.display = 'block'
-    document.getElementById('noProductos').textContent = 'Error al cargar productos. Intentá más tarde.'
+    document.getElementById('noProductos').textContent = t('error.productos')
   }
 }
 
@@ -64,8 +64,8 @@ function renderProductos() {
       : `<div class="producto-foto-placeholder">${ICONO_PRODUCTO}</div>`
 
     const accionHtml = p.disponible === false
-      ? `<span class="badge-no-disponible">Sin stock</span>`
-      : `<button class="btn-agregar" onclick="abrirModal('${p.id}')">Agregar al carrito</button>`
+      ? `<span class="badge-no-disponible">${t('producto.sin.stock')}</span>`
+      : `<button class="btn-agregar" onclick="abrirModal('${p.id}')">${t('producto.agregar')}</button>`
 
     return `
       <article class="producto-card ${p.disponible === false ? 'no-disponible' : ''}"
@@ -95,7 +95,7 @@ function abrirModal(id) {
     : `<div class="modal-foto-placeholder">${ICONO_PRODUCTO.replace('48', '72')}</div>`
 
   const variantesHtml = productoEnModal.variantes?.length
-    ? `<p class="modal-variantes-label">Color / Variante</p>
+    ? `<p class="modal-variantes-label">${t('producto.variante')}</p>
        <div class="variantes-grid" id="variantesGrid">
          ${productoEnModal.variantes.map(v =>
            `<button class="variante-btn ${v === varianteSeleccionada ? 'seleccionada' : ''}"
@@ -105,8 +105,8 @@ function abrirModal(id) {
     : ''
 
   const btnHtml = productoEnModal.disponible === false
-    ? `<button class="modal-agregar" disabled>Sin stock</button>`
-    : `<button class="modal-agregar" id="btnModalAgregar">Agregar al carrito</button>`
+    ? `<button class="modal-agregar" disabled>${t('producto.sin.stock')}</button>`
+    : `<button class="modal-agregar" id="btnModalAgregar">${t('producto.agregar')}</button>`
 
   modal.innerHTML = `
     <button class="modal-cerrar" onclick="cerrarModal()" aria-label="Cerrar">✕</button>
